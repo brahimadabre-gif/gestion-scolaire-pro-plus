@@ -1,0 +1,58 @@
+name: Build and Release Windows EXE
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Windows EXE
+      run: npm run dist:win
+
+    - name: List built files
+      run: dir dist\*.exe
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Gestion-Scolaire-Pro-Plus-EXE
+        path: dist/*.exe
+        retention-days: 90
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      if: success()
+      with:
+        files: dist/*.exe
+        tag_name: v${{ github.run_number }}
+        release_name: Release v${{ github.run_number }} - ${{ github.event.head_commit.message }}
+        body: |
+          🎉 **Nouvelle compilation réussie !**
+          
+          📦 **Fichiers générés :**
+          - `GestionScolaire_Pro_Plus_Setup_*.exe` - Installateur professionnel avec assistant
+          - `GestionScolaire_Pro_Plus_Portable_*.exe` - Version portable (sans installation)
+          
+          ✨ **Prêt à télécharger et utiliser !**
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
