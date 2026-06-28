@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Electron build outputs
+dist/
+win-unpacked/
+win-ia32-unpacked/
+*.blockmap
+
+# Android build outputs
+platforms/
+plugins/
+cordova-app/platforms/
+cordova-app/plugins/
+*.keystore
+*.jks
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temp
+temp/
+tmp/
+*.tmp
