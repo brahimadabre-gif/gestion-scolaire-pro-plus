@@ -1,0 +1,47 @@
+{
+  "name": "gestion-scolaire-pro-plus",
+  "version": "1.0.0",
+  "description": "Gestion Scolaire Pro Plus - Logiciel de gestion scolaire complet",
+  "main": "main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.gestionscolaire.proplus",
+    "productName": "Gestion Scolaire Pro Plus",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "certificateFile": null,
+      "certificatePassword": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Gestion Scolaire Pro Plus"
+    },
+    "portable": {
+      "artifactName": "${productName}_Portable_${version}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  }
+}
